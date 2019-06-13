@@ -23,7 +23,7 @@ def main():
     # Looping through all buckets that was given in file
     for bucket in array_of_buckets:
         name_tag= 0
-        #Checking to see if bucket has KAST_NAME Tag, if no error has occur. It is bc tags exist already
+        #Checking to see if bucket has NAME Tag, if no error has occur. It is bc tags exist already
         try:
             response = client.get_bucket_tagging(
                 Bucket=bucket
