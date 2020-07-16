@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-import boto3, pprint, re, sys
+import boto3
+import pprint
+import re
+import sys
 sys.path.append("../")
 import ecslib
 
@@ -10,8 +13,10 @@ def print_the_results(results):
   for r in results:
         print(r['cluster'])
         print(r['service'])
-        print("Desired Count: " + str(r['desiredCount']))
-        print("Running Count: " + str(r['runningCount']))
+        desired = str(r['desiredCount'])
+        running = str(r['runningCount'])
+        print(f"Desired Count: {desired}")
+        print(f"Running Count: {running}")
         print(" ")
 
 def main():
@@ -26,12 +31,12 @@ def main():
         for s in services:
             service = s['service']
             cluster = s['cluster']
-        
+
             if 'kipu-logservers-pair' not in service:
                 r = client.describe_services(
-                    cluster=cluster,
-                    services=[service]
-                )
+                        cluster=cluster,
+                        services=[service]
+                    )
                 m = re.search(r'cluster/(.*)', cluster)
                 cluster_name = m[1]
                 n = re.search(r'service/(.*)', service)
